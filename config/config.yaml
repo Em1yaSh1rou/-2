@@ -55,6 +55,11 @@ schedule:
 platforms:
   enabled: true                         # 是否启用热榜平台抓取
   sources:
+  
+    - id: "fastbull"
+      name: "法布财经"
+    - id: "juejin"
+      name: "稀土掘金"
     - id: "toutiao"
       name: "今日头条"
     - id: "baidu"
