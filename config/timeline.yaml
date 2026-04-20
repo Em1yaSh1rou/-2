@@ -239,7 +239,7 @@ presets:
         name: "到岗速览"
         start: "09:00"
         end: "11:00"
-        analyze: true              # AI 分析当前热点
+        analyze: false              # AI 分析当前热点
         ai_mode: "current"         # AI 分析当前榜单
         push: true                 # 到岗后看当前热点
         report_mode: "current"     # 当前在榜的新闻
@@ -254,6 +254,7 @@ presets:
         # analyze 继承 default: false → 午间不做 AI 分析，节省 API
         # once 继承 default（push: true）→ 只推一次
 
+        collect: true
       closing_summary:
         name: "收工汇总"
         start: "17:00"
@@ -405,7 +406,7 @@ custom:
   # 时间段中没有写的字段，也会回退到这里。
   # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   default:
-    collect: true                  # 是否采集数据（爬取热榜 + RSS）
+    collect: false                  # 是否采集数据（爬取热榜 + RSS）
     analyze: false                 # 是否执行 AI 分析
     ai_mode: "current"            # AI 分析模式:
                                    #   follow_report → 跟随 report_mode
@@ -466,10 +467,12 @@ custom:
       # frequency_file: "xxx.txt"               # 关键词文件（可选，位于 config/custom/keyword/）
       # interests_file: "xxx.txt"                # AI 兴趣文件（可选，位于 config/custom/ai/）
       # filter_method: "keyword"                # 筛选策略（可选: keyword | ai，不填用全局 filter.method）
-      collect: true                # 夜间继续采集数据
-      analyze: true                # 夜间可以跑 AI 分析（反正不推送）
+      collect: false                # 夜间继续采集数据
+      analyze: false                # 夜间可以跑 AI 分析（反正不推送）
       push: false                  # 深夜不推送，避免打扰
 
+      once:
+        analyze: true
     weekday_morning:
       name: "工作日早间"
       start: "08:00"
@@ -481,6 +484,8 @@ custom:
       report_mode: "incremental"   # 只推新增内容
       # once 继承 default（push: true）→ 窗口内只推一次
 
+      once:
+        analyze: true
     weekend_morning:
       name: "周末早间"
       start: "10:00"
