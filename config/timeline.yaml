@@ -396,18 +396,18 @@ presets:
 #     其余时间走默认配置（静默采集）
 
 custom:
-  name: "省Token增量模式"
-  description: "07:30早报一次，00:00-07:29静默，其余时间有新内容就推送，仅推新增内容。"
+  name: "早报+增量+晚报模式"
+  description: "07:30早报，白天增量推送，23:30日报总结，夜间静默。"
 
   default:
     collect: true
     analyze: false
     ai_mode: "current"
     push: true
-    report_mode: "incremental"   # 只推新增内容，最省token
+    report_mode: "incremental"
     once:
       analyze: true
-      push: false                # 白天有新增就可多次推送
+      push: false
 
   periods:
 
@@ -418,12 +418,9 @@ custom:
       collect: true
       analyze: false
       push: false
-      once:
-        analyze: true
-        push: true
 
     morning_push:
-      name: "早间推送"
+      name: "早报"
       start: "07:30"
       end: "07:59"
       collect: true
@@ -431,12 +428,27 @@ custom:
       push: true
       report_mode: "incremental"
       once:
+        push: true
+
+    evening_summary:
+      name: "晚报总结"
+      start: "23:30"
+      end: "23:59"
+      collect: true
+      analyze: true
+      ai_mode: "daily"
+      push: true
+      report_mode: "daily"
+      once:
         analyze: true
-        push: true              # 这个时间段只发一次
+        push: true
 
   day_plans:
     all_day:
-      periods: ["silent_night", "morning_push"]
+      periods:
+        - silent_night
+        - morning_push
+        - evening_summary
 
   week_map:
     1: "all_day"
