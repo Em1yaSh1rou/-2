@@ -395,6 +395,65 @@ presets:
 #     晚间汇总 19:00-21:00：推送 ✓ | 分析 ✓ | daily
 #     其余时间走默认配置（静默采集）
 
+  custom_copy:
+    name: 早报+增量+晚报模式 (副本)
+    description: 07:30早报，白天增量推送，23:30日报总结，夜间静默。
+    default:
+      collect: true
+      analyze: false
+      ai_mode: current
+      push: true
+      report_mode: incremental
+      once:
+        analyze: true
+        push: false
+    periods:
+      silent_night:
+        name: 夜间静默
+        start: "00:00"
+        end: "07:29"
+        collect: true
+        analyze: false
+        push: false
+      morning_push:
+        name: 早报
+        start: "07:30"
+        end: "07:59"
+        collect: true
+        analyze: false
+        push: true
+        report_mode: incremental
+        once:
+          push: true
+      evening_summary:
+        name: 晚报总结
+        start: "23:30"
+        end: "23:59"
+        collect: true
+        analyze: true
+        ai_mode: daily
+        push: true
+        report_mode: daily
+        once:
+          analyze: true
+          push: true
+    day_plans:
+      all_day:
+        periods:
+          - silent_night
+          - morning_push
+          - evening_summary
+    week_map:
+      "1": all_day
+      "2": all_day
+      "3": all_day
+      "4": all_day
+      "5": all_day
+      "6": all_day
+      "7": all_day
+    overlap:
+      policy: error_on_overlap
+
 custom:
   name: "早报+增量+晚报模式"
   description: "07:30早报，白天增量推送，23:30日报总结，夜间静默。"
